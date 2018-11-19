@@ -1,8 +1,42 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using System.Runtime.CompilerServices;
 
 namespace Kelson.Common.Parse.Rules
 {
+    public class Sequence<TToken, TValue> : Rule<TToken, TValue[]>
+    {
+        public readonly Rule<TToken, TValue>[] Rules;
+
+        public Sequence(params Rule<TToken, TValue>[] rules)
+        {
+            Rules = rules;
+        }
+
+        public override string Name => $"Sequence TToken -> [{typeof(TValue)}]";
+
+        protected override Result<TToken, TValue[]> Evaluate(Source<TToken> source)
+        {
+            Result<TToken, TValue> result = null;
+            var values = new List<TValue>();
+            foreach (var rule in Rules)
+            {
+                result = rule.Parse(source);
+                if (result is Failure<TToken, TValue> failure)
+                    return new Failure<TToken, TValue[]>("Sequence failed", failure.Remaining, failure);
+                else if (result is Success<TToken, TValue> success)
+                {
+                    values.Add(success.Value);
+                    source = success.Remaining;
+                }
+            }
+            return new Success<TToken, TValue[]>(source, values.ToArray());
+        }
+
+        public static Sequence<TToken, TValue> Of(params Rule<TToken, TValue>[] rules)
+            => new Sequence<TToken, TValue>(rules);
+    }
+
     public class Sequence<TToken, T1, T2> : Rule<TToken, (T1, T2)>
     {
         public Rule<TToken, T1> R1;
@@ -20,10 +54,10 @@ namespace Kelson.Common.Parse.Rules
         {
             object r = null;
             if ((r = R1.Parse(source)) is Success<TToken, T1> s1)
-            if ((r = R2.Parse(s1.Remaining)) is Success<TToken, T2> s2)            
-                return new Success<TToken, (T1, T2)>(
-                    s2.Remaining,
-                    (s1.Value, s2.Value));
+                if ((r = R2.Parse(s1.Remaining)) is Success<TToken, T2> s2)
+                    return new Success<TToken, (T1, T2)>(
+                        s2.Remaining,
+                        (s1.Value, s2.Value));
             var f = (IFailure<TToken>)r;
             return new Failure<TToken, (T1, T2)>($"Sequence failed", f.Remaining, f);
         }
@@ -48,11 +82,11 @@ namespace Kelson.Common.Parse.Rules
         {
             object r = null;
             if ((r = R1.Parse(source)) is Success<TToken, T1> s1)
-            if ((r = R2.Parse(s1.Remaining)) is Success<TToken, T2> s2)
-            if ((r = R3.Parse(s2.Remaining)) is Success<TToken, T3> s3)                   
-                return new Success<TToken, (T1, T2, T3)>(
-                    s3.Remaining,
-                    (s1.Value, s2.Value, s3.Value));
+                if ((r = R2.Parse(s1.Remaining)) is Success<TToken, T2> s2)
+                    if ((r = R3.Parse(s2.Remaining)) is Success<TToken, T3> s3)
+                        return new Success<TToken, (T1, T2, T3)>(
+                            s3.Remaining,
+                            (s1.Value, s2.Value, s3.Value));
             var f = (IFailure<TToken>)r;
             return new Failure<TToken, (T1, T2, T3)>($"Sequence failed", f.Remaining, f);
         }
@@ -79,12 +113,12 @@ namespace Kelson.Common.Parse.Rules
         {
             object r = null;
             if ((r = R1.Parse(source)) is Success<TToken, T1> s1)
-            if ((r = R2.Parse(s1.Remaining)) is Success<TToken, T2> s2)
-            if ((r = R3.Parse(s2.Remaining)) is Success<TToken, T3> s3)
-            if ((r = R4.Parse(s3.Remaining)) is Success<TToken, T4> s4)            
-                return new Success<TToken, (T1, T2, T3, T4)>(
-                    s4.Remaining,
-                    (s1.Value, s2.Value, s3.Value, s4.Value));
+                if ((r = R2.Parse(s1.Remaining)) is Success<TToken, T2> s2)
+                    if ((r = R3.Parse(s2.Remaining)) is Success<TToken, T3> s3)
+                        if ((r = R4.Parse(s3.Remaining)) is Success<TToken, T4> s4)
+                            return new Success<TToken, (T1, T2, T3, T4)>(
+                                s4.Remaining,
+                                (s1.Value, s2.Value, s3.Value, s4.Value));
             var f = (IFailure<TToken>)r;
             return new Failure<TToken, (T1, T2, T3, T4)>($"Sequence failed", f.Remaining, f);
         }
@@ -113,13 +147,13 @@ namespace Kelson.Common.Parse.Rules
         {
             object r = null;
             if ((r = R1.Parse(source)) is Success<TToken, T1> s1)
-            if ((r = R2.Parse(s1.Remaining)) is Success<TToken, T2> s2)
-            if ((r = R3.Parse(s2.Remaining)) is Success<TToken, T3> s3)
-            if ((r = R4.Parse(s3.Remaining)) is Success<TToken, T4> s4)
-            if ((r = R5.Parse(s4.Remaining)) is Success<TToken, T5> s5)            
-                return new Success<TToken, (T1, T2, T3, T4, T5)>(
-                    s5.Remaining,
-                    (s1.Value, s2.Value, s3.Value, s4.Value, s5.Value));
+                if ((r = R2.Parse(s1.Remaining)) is Success<TToken, T2> s2)
+                    if ((r = R3.Parse(s2.Remaining)) is Success<TToken, T3> s3)
+                        if ((r = R4.Parse(s3.Remaining)) is Success<TToken, T4> s4)
+                            if ((r = R5.Parse(s4.Remaining)) is Success<TToken, T5> s5)
+                                return new Success<TToken, (T1, T2, T3, T4, T5)>(
+                                    s5.Remaining,
+                                    (s1.Value, s2.Value, s3.Value, s4.Value, s5.Value));
             var f = (IFailure<TToken>)r;
             return new Failure<TToken, (T1, T2, T3, T4, T5)>($"Sequence failed", f.Remaining, f);
         }
@@ -150,14 +184,14 @@ namespace Kelson.Common.Parse.Rules
         {
             object r = null;
             if ((r = R1.Parse(source)) is Success<TToken, T1> s1)
-            if ((r = R2.Parse(s1.Remaining)) is Success<TToken, T2> s2)
-            if ((r = R3.Parse(s2.Remaining)) is Success<TToken, T3> s3)
-            if ((r = R4.Parse(s3.Remaining)) is Success<TToken, T4> s4)
-            if ((r = R5.Parse(s4.Remaining)) is Success<TToken, T5> s5)
-            if ((r = R6.Parse(s5.Remaining)) is Success<TToken, T6> s6)               
-                return new Success<TToken, (T1, T2, T3, T4, T5, T6)>(
-                    s6.Remaining,
-                    (s1.Value, s2.Value, s3.Value, s4.Value, s5.Value, s6.Value));
+                if ((r = R2.Parse(s1.Remaining)) is Success<TToken, T2> s2)
+                    if ((r = R3.Parse(s2.Remaining)) is Success<TToken, T3> s3)
+                        if ((r = R4.Parse(s3.Remaining)) is Success<TToken, T4> s4)
+                            if ((r = R5.Parse(s4.Remaining)) is Success<TToken, T5> s5)
+                                if ((r = R6.Parse(s5.Remaining)) is Success<TToken, T6> s6)
+                                    return new Success<TToken, (T1, T2, T3, T4, T5, T6)>(
+                                        s6.Remaining,
+                                        (s1.Value, s2.Value, s3.Value, s4.Value, s5.Value, s6.Value));
             var f = (IFailure<TToken>)r;
             return new Failure<TToken, (T1, T2, T3, T4, T5, T6)>($"Sequence failed", f.Remaining, f);
         }
@@ -190,15 +224,15 @@ namespace Kelson.Common.Parse.Rules
         {
             object r = null;
             if ((r = R1.Parse(source)) is Success<TToken, T1> s1)
-            if ((r = R2.Parse(s1.Remaining)) is Success<TToken, T2> s2)
-            if ((r = R3.Parse(s2.Remaining)) is Success<TToken, T3> s3)
-            if ((r = R4.Parse(s3.Remaining)) is Success<TToken, T4> s4)
-            if ((r = R5.Parse(s4.Remaining)) is Success<TToken, T5> s5)
-            if ((r = R6.Parse(s5.Remaining)) is Success<TToken, T6> s6)
-            if ((r = R7.Parse(s6.Remaining)) is Success<TToken, T7> s7)            
-                return new Success<TToken, (T1, T2, T3, T4, T5, T6, T7)>(
-                    s7.Remaining,
-                    (s1.Value, s2.Value, s3.Value, s4.Value, s5.Value, s6.Value, s7.Value));
+                if ((r = R2.Parse(s1.Remaining)) is Success<TToken, T2> s2)
+                    if ((r = R3.Parse(s2.Remaining)) is Success<TToken, T3> s3)
+                        if ((r = R4.Parse(s3.Remaining)) is Success<TToken, T4> s4)
+                            if ((r = R5.Parse(s4.Remaining)) is Success<TToken, T5> s5)
+                                if ((r = R6.Parse(s5.Remaining)) is Success<TToken, T6> s6)
+                                    if ((r = R7.Parse(s6.Remaining)) is Success<TToken, T7> s7)
+                                        return new Success<TToken, (T1, T2, T3, T4, T5, T6, T7)>(
+                                            s7.Remaining,
+                                            (s1.Value, s2.Value, s3.Value, s4.Value, s5.Value, s6.Value, s7.Value));
             var f = (IFailure<TToken>)r;
             return new Failure<TToken, (T1, T2, T3, T4, T5, T6, T7)>($"Sequence failed", f.Remaining, f);
         }
@@ -233,16 +267,16 @@ namespace Kelson.Common.Parse.Rules
         {
             object r = null;
             if ((r = R1.Parse(source)) is Success<TToken, T1> s1)
-            if ((r = R2.Parse(s1.Remaining)) is Success<TToken, T2> s2)
-            if ((r = R3.Parse(s2.Remaining)) is Success<TToken, T3> s3)
-            if ((r = R4.Parse(s3.Remaining)) is Success<TToken, T4> s4)
-            if ((r = R5.Parse(s4.Remaining)) is Success<TToken, T5> s5)
-            if ((r = R6.Parse(s5.Remaining)) is Success<TToken, T6> s6)
-            if ((r = R7.Parse(s6.Remaining)) is Success<TToken, T7> s7)
-            if ((r = R8.Parse(s7.Remaining)) is Success<TToken, T8> s8)
-                return new Success<TToken, (T1, T2, T3, T4, T5, T6, T7, T8)>(
-                    s8.Remaining,
-                    (s1.Value, s2.Value, s3.Value, s4.Value, s5.Value, s6.Value, s7.Value, s8.Value));
+                if ((r = R2.Parse(s1.Remaining)) is Success<TToken, T2> s2)
+                    if ((r = R3.Parse(s2.Remaining)) is Success<TToken, T3> s3)
+                        if ((r = R4.Parse(s3.Remaining)) is Success<TToken, T4> s4)
+                            if ((r = R5.Parse(s4.Remaining)) is Success<TToken, T5> s5)
+                                if ((r = R6.Parse(s5.Remaining)) is Success<TToken, T6> s6)
+                                    if ((r = R7.Parse(s6.Remaining)) is Success<TToken, T7> s7)
+                                        if ((r = R8.Parse(s7.Remaining)) is Success<TToken, T8> s8)
+                                            return new Success<TToken, (T1, T2, T3, T4, T5, T6, T7, T8)>(
+                                                s8.Remaining,
+                                                (s1.Value, s2.Value, s3.Value, s4.Value, s5.Value, s6.Value, s7.Value, s8.Value));
             var f = (IFailure<TToken>)r;
             return new Failure<TToken, (T1, T2, T3, T4, T5, T6, T7, T8)>($"Sequence failed", f.Remaining, f);
         }
@@ -279,17 +313,17 @@ namespace Kelson.Common.Parse.Rules
         {
             object r = null;
             if ((r = R1.Parse(source)) is Success<TToken, T1> s1)
-            if ((r = R2.Parse(s1.Remaining)) is Success<TToken, T2> s2)
-            if ((r = R3.Parse(s2.Remaining)) is Success<TToken, T3> s3)
-            if ((r = R4.Parse(s3.Remaining)) is Success<TToken, T4> s4)
-            if ((r = R5.Parse(s4.Remaining)) is Success<TToken, T5> s5)
-            if ((r = R6.Parse(s5.Remaining)) is Success<TToken, T6> s6)
-            if ((r = R7.Parse(s6.Remaining)) is Success<TToken, T7> s7)
-            if ((r = R8.Parse(s7.Remaining)) is Success<TToken, T8> s8)
-            if ((r = R9.Parse(s8.Remaining)) is Success<TToken, T9> s9)
-                return new Success<TToken, (T1, T2, T3, T4, T5, T6, T7, T8, T9)>(
-                    s9.Remaining,
-                    (s1.Value, s2.Value, s3.Value, s4.Value, s5.Value, s6.Value, s7.Value, s8.Value, s9.Value));
+                if ((r = R2.Parse(s1.Remaining)) is Success<TToken, T2> s2)
+                    if ((r = R3.Parse(s2.Remaining)) is Success<TToken, T3> s3)
+                        if ((r = R4.Parse(s3.Remaining)) is Success<TToken, T4> s4)
+                            if ((r = R5.Parse(s4.Remaining)) is Success<TToken, T5> s5)
+                                if ((r = R6.Parse(s5.Remaining)) is Success<TToken, T6> s6)
+                                    if ((r = R7.Parse(s6.Remaining)) is Success<TToken, T7> s7)
+                                        if ((r = R8.Parse(s7.Remaining)) is Success<TToken, T8> s8)
+                                            if ((r = R9.Parse(s8.Remaining)) is Success<TToken, T9> s9)
+                                                return new Success<TToken, (T1, T2, T3, T4, T5, T6, T7, T8, T9)>(
+                                                    s9.Remaining,
+                                                    (s1.Value, s2.Value, s3.Value, s4.Value, s5.Value, s6.Value, s7.Value, s8.Value, s9.Value));
             var f = (IFailure<TToken>)r;
             return new Failure<TToken, (T1, T2, T3, T4, T5, T6, T7, T8, T9)>($"Sequence failed", f.Remaining, f);
         }

@@ -3,7 +3,7 @@ using System.Runtime.CompilerServices;
 
 namespace Kelson.Common.Parse.Rules
 {
-    public class Optional<TToken, TValue> : Rule<TToken, bool> where TToken : IEquatable<TToken>
+    public class Optional<TToken, TValue> : Rule<TToken, bool>
     {
         public readonly Rule<TToken, TValue> Rule;
 
@@ -19,5 +19,13 @@ namespace Kelson.Common.Parse.Rules
             else
                 return new Success<TToken, bool>(source.Next(), true);            
         }
-    }    
+    }
+
+    //public class Ignore<TToken, TValue> : Rule<TToken, bool>
+    //{
+    //    public readonly Rule<TToken, TValue> Rule;
+
+    //    public Ignore(Rule<TToken, TValue> rule, [CallerMemberName] string location = null) : base(location)
+    //        => Rule = rule;
+    //}
 }

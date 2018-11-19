@@ -3,11 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28307.102
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kelson.Common.Parse", "Kelson.Common.Parse\Kelson.Common.Parse.csproj", "{A30803BE-0CB2-4423-ABE4-3A841A6FB337}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kelson.Common.Parse", "Kelson.Common.Parse\Kelson.Common.Parse.csproj", "{A30803BE-0CB2-4423-ABE4-3A841A6FB337}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kelson.Common.Parse.Rules", "..\Kelson.Common.Parse.Rules\Kelson.Common.Parse.Rules.csproj", "{262C9EA9-318D-424D-8022-13EA67434010}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kelson.Common.Parse.Rules.Tests", "Kelson.Common.Parse.Rules.Tests\Kelson.Common.Parse.Rules.Tests.csproj", "{A743C037-5775-4AA0-B176-05BBF6B2A386}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kelson.Common.Parse.Rules.Tests", "Kelson.Common.Parse.Rules.Tests\Kelson.Common.Parse.Rules.Tests.csproj", "{A743C037-5775-4AA0-B176-05BBF6B2A386}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -19,10 +17,6 @@ Global
 		{A30803BE-0CB2-4423-ABE4-3A841A6FB337}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A30803BE-0CB2-4423-ABE4-3A841A6FB337}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A30803BE-0CB2-4423-ABE4-3A841A6FB337}.Release|Any CPU.Build.0 = Release|Any CPU
-		{262C9EA9-318D-424D-8022-13EA67434010}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{262C9EA9-318D-424D-8022-13EA67434010}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{262C9EA9-318D-424D-8022-13EA67434010}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{262C9EA9-318D-424D-8022-13EA67434010}.Release|Any CPU.Build.0 = Release|Any CPU
 		{A743C037-5775-4AA0-B176-05BBF6B2A386}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{A743C037-5775-4AA0-B176-05BBF6B2A386}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A743C037-5775-4AA0-B176-05BBF6B2A386}.Release|Any CPU.ActiveCfg = Release|Any CPU

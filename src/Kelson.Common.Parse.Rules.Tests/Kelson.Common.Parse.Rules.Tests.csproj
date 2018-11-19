@@ -17,7 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Kelson.Common.Parse.Rules\Kelson.Common.Parse.Rules.csproj" />
+    <ProjectReference Include="..\Kelson.Common.Parse\Kelson.Common.Parse.csproj" />
   </ItemGroup>
 
 </Project>

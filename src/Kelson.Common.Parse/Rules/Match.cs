@@ -1,5 +1,4 @@
-﻿using System;
-using System.Runtime.CompilerServices;
+﻿using System.Runtime.CompilerServices;
 
 namespace Kelson.Common.Parse.Rules
 {
@@ -21,5 +20,8 @@ namespace Kelson.Common.Parse.Rules
             else
                 return new Failure<TToken, TToken>($"Expected {Expected} but found {top}", source.Next(), Expected);
         }
+
+        public static Match<TToken> EqualTo(TToken token, [CallerMemberName] string location = null)
+            => new Match<TToken>(token, location: location);
     }
 }

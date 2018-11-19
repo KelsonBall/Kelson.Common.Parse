@@ -32,6 +32,13 @@
         public TToken[] Expectations { get; }
         public IFailure<TToken>[] InnerFailures { get; }
 
+        public Failure(string message, Source<TToken> remainder) : base(remainder)
+        {
+            Message = message;
+            Expectations = new TToken[0];
+            InnerFailures = new IFailure<TToken>[0];
+        }
+
         public Failure(string message, Source<TToken> remainder, params TToken[] expect) : base(remainder)
         {
             Message = message;            
@@ -51,7 +58,7 @@
     public abstract class Rule<TIn, TOut>
     {
         public abstract string Name { get; }
-        public string Location { get; }
+        public string Location { get; internal set; }
 
         public Result<TIn, TOut> Parse(Source<TIn> source) => Evaluate(source.InRule(this));
         

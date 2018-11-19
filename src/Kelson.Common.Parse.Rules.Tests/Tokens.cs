@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Kelson.Common.Parse.Rules.Tests
+﻿namespace Kelson.Common.Parse.Rules.Tests
 {
     public static class TestData
     {

@@ -1,15 +1,22 @@
-﻿namespace Kelson.Common.Parse
+﻿using System;
+
+namespace Kelson.Common.Parse
 {
     public readonly struct TokenRef<TToken>
     {
-        public readonly TToken[] Source;
-        public readonly TToken Token;
+        public readonly TextSource Text;
+        public readonly TextPosition Position;
+
+        public readonly ReadOnlyMemory<TToken> Source;
         public readonly int Index;
 
-        internal TokenRef(TToken[] source, int index)
+        public TToken Token => Source.Span[Index];
+
+        internal TokenRef(TToken[] source, int index, TextSource text, TextPosition position)
         {
-            Source = source;
-            Token = source[index];
+            Text = text;
+            Position = position;
+            Source = source;            
             Index = index;
         }
     }

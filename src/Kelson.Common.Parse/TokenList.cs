@@ -4,6 +4,8 @@ namespace Kelson.Common.Parse
 {
     public class TokenList<TToken>
     {
+        public readonly Guid Id = Guid.NewGuid();
+
         private readonly TToken[] Values;
 
         public int Start { get; }
@@ -37,13 +39,6 @@ namespace Kelson.Common.Parse
             Start = start;
             Length = length ?? Root.Length;
             Values = root.Values;
-        }
-
-        public TokenList<TToken> Slice(int start, int? length = null)
-        {
-            if (length > Length)
-                throw new IndexOutOfRangeException("Can not take a slice longer than available length");
-            return new TokenList<TToken>(Root, Start + start, length ?? (Length - start));
         }
     }
 }

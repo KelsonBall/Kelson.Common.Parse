@@ -3,7 +3,7 @@ using System.Runtime.CompilerServices;
 
 namespace Kelson.Common.Parse.Rules
 {
-    public class OneOrMore<TToken, TValue> : Rule<TToken, int> where TToken : IEquatable<TToken>
+    public class OneOrMore<TToken, TValue> : Rule<TToken, int>
     {
         public readonly Rule<TToken, TValue> Rule;
         public readonly TValue Value;
