@@ -27,7 +27,7 @@ namespace Kelson.Common.Parse
             RuleLocation = location;
         }
 
-        public TToken Peek() => List[Index];
+        public TToken Peek() => List[Index].Token;
 
         public Source<TToken> Next() => 
             (!IsAtEnd) 
@@ -42,7 +42,7 @@ namespace Kelson.Common.Parse
             IEnumerable<TToken> enumerate(Source<TToken> local)
             {
                 for (int i = local.Index; i < local.List.Length; i++)
-                    yield return local.List[i];
+                    yield return local.List[i].Token;
             }
 
             return enumerate(this).GetEnumerator();

@@ -12,7 +12,7 @@ namespace Kelson.Common.Parse.Rules
         }
 
         public static Rule<TIn, TOut> Or<TIn, TOut>(this Rule<TIn, TOut> a, Rule<TIn, TOut> b, [CallerMemberName] string location = null)
-            => new FirstOf<TIn, TOut>(a, b).AtLocation(location);
+            => new First<TIn, TOut>(a, b).AtLocation(location);
 
         public static Rule<TIn, T2> ThenWithLast<TIn, T1, T2>(this Rule<TIn, T1> a, Rule<TIn, T2> b, [CallerMemberName] string location = null)
             => new Select<TIn, (T1, T2), T2>(new Sequence<TIn, T1, T2>(a, b), ab => ab.Item2, location: location);
@@ -39,6 +39,6 @@ namespace Kelson.Common.Parse.Rules
             => new ZeroOrMore<TIn, TOut>(rule, location: location);
 
         public static Rule<TIn, int> AtLeastOnce<TIn, TOut>(this Rule<TIn, TOut> rule, [CallerMemberName] string location = null)
-            => new OneOrMore<TIn, TOut>(rule, location: location);
+            => new OneOrMore<TIn, TOut>(rule, location: location);        
     }
 }

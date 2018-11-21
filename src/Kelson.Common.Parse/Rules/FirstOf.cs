@@ -3,14 +3,14 @@ using System.Collections.Generic;
 
 namespace Kelson.Common.Parse.Rules
 {
-    public class FirstOf<TToken, TValue> : Rule<TToken, TValue>
+    public class First<TToken, TValue> : Rule<TToken, TValue>
     {
         public readonly Rule<TToken, TValue>[] Rules;
 
-        public FirstOf(params Rule<TToken, TValue>[] rules) : base()        
+        public First(params Rule<TToken, TValue>[] rules) : base()        
             => Rules = rules;        
 
-        public override string Name => throw new NotImplementedException();
+        public override string Name => "First";
 
         protected override Result<TToken, TValue> Evaluate(Source<TToken> source)
         {
@@ -28,5 +28,8 @@ namespace Kelson.Common.Parse.Rules
 
             return new Failure<TToken, TValue>("No options matched", source.Next(), failures.ToArray());
         }
+
+        public static First<TToken, TValue> Of(params Rule<TToken, TValue>[] rules)
+            => new First<TToken, TValue>(rules);
     }
 }

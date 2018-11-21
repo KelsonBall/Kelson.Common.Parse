@@ -19,5 +19,10 @@ namespace Kelson.Common.Parse
             Source = source;            
             Index = index;
         }
+
+        public string ToStringValue()
+        {
+            return Text.Data.Slice(Position.Index, Position.Length).ToString();
+        }
     }
 }

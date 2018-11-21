@@ -6,7 +6,11 @@ namespace Kelson.Common.Parse
     {
         public readonly Guid Id = Guid.NewGuid();
 
-        private readonly TToken[] Values;
+        public readonly TToken[] Values;
+
+        public readonly TextPosition[] Positions;
+
+        public readonly TextSource Source;
 
         public int Start { get; }
 
@@ -14,14 +18,14 @@ namespace Kelson.Common.Parse
 
         public TokenList<TToken> Root { get; }
 
-        public TToken this[int index]
+        public TokenRef<TToken> this[int index]
         {
             get
             {
                 if (index > Length)
                     throw new IndexOutOfRangeException();
                 else
-                    return Values[index + Start];
+                    return new TokenRef<TToken>(Values, index + Start, Source, (index + Start < Positions.Length) ? Positions[index + Start] : default);
             }
         }
 
@@ -30,6 +34,17 @@ namespace Kelson.Common.Parse
             Values = tokens;
             Start = 0;
             Length = Values.Length;
+            Positions = new TextPosition[0];
+            Root = this;
+        }
+
+        public TokenList(TToken[] tokens, TextPosition[] positions, TextSource source)
+        {
+            Values = tokens;
+            Start = 0;
+            Length = Values.Length;
+            Positions = positions;
+            Source = source;
             Root = this;
         }
 
