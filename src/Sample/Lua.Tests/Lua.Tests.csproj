@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.1</TargetFramework>
@@ -16,8 +16,8 @@
     </PackageReference>
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\Sample\Lua\Lua.csproj" />
+  <ItemGroup>    
+    <ProjectReference Include="..\Lua\Lua.csproj" />
   </ItemGroup>
 
 </Project>

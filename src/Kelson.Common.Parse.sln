@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.28307.102
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29519.87
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kelson.Common.Parse", "Kelson.Common.Parse\Kelson.Common.Parse.csproj", "{A30803BE-0CB2-4423-ABE4-3A841A6FB337}"
 EndProject
@@ -9,9 +9,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kelson.Common.Parse.Rules.T
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Sample", "Sample", "{0096E94D-C94B-441B-9987-3BCBA54F14CF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lua", "Sample\Lua\Lua.csproj", "{98DDDAB2-BC81-499B-866E-8C3E9983ACC8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Lua", "Sample\Lua\Lua.csproj", "{98DDDAB2-BC81-499B-866E-8C3E9983ACC8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lua.Tests", "Lua.Tests\Lua.Tests.csproj", "{6395BFCA-0EC4-4431-B4B9-C4BF614525AB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Lua.Tests", "Sample\Lua.Tests\Lua.Tests.csproj", "{846DF0E0-12D7-4E7A-99BA-B4002A4489D5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -31,17 +31,17 @@ Global
 		{98DDDAB2-BC81-499B-866E-8C3E9983ACC8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{98DDDAB2-BC81-499B-866E-8C3E9983ACC8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{98DDDAB2-BC81-499B-866E-8C3E9983ACC8}.Release|Any CPU.Build.0 = Release|Any CPU
-		{6395BFCA-0EC4-4431-B4B9-C4BF614525AB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{6395BFCA-0EC4-4431-B4B9-C4BF614525AB}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{6395BFCA-0EC4-4431-B4B9-C4BF614525AB}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{6395BFCA-0EC4-4431-B4B9-C4BF614525AB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{846DF0E0-12D7-4E7A-99BA-B4002A4489D5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{846DF0E0-12D7-4E7A-99BA-B4002A4489D5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{846DF0E0-12D7-4E7A-99BA-B4002A4489D5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{846DF0E0-12D7-4E7A-99BA-B4002A4489D5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{98DDDAB2-BC81-499B-866E-8C3E9983ACC8} = {0096E94D-C94B-441B-9987-3BCBA54F14CF}
-		{6395BFCA-0EC4-4431-B4B9-C4BF614525AB} = {0096E94D-C94B-441B-9987-3BCBA54F14CF}
+		{846DF0E0-12D7-4E7A-99BA-B4002A4489D5} = {0096E94D-C94B-441B-9987-3BCBA54F14CF}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {30EC33FE-70D4-468D-A226-F7251E8DBBFF}
